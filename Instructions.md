@@ -39,22 +39,22 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 **Structure**
 
-- [ ] Review the NASA Open Data Portal
+- [x] Review the NASA Open Data Portal
       [documentation](https://nasa.github.io/data-nasa-gov-frontpage/) for the
       Meteorite Landing dataset. Look for:
   - API endpoint
   - Understand the available data fields and their formats
   - How to retrieve the dataset from the NASA Open Data Portal
-- [ ] Setup the top-level parent component for the application containing
+- [x] Setup the top-level parent component for the application containing
   - Search panel
   - Search results display area (tabular format)
-- [ ] Create the search panel containing:
+- [x] Create the search panel containing:
   - Input text field for entry of search terms
   - Search button
-- [ ] Create a search results panel containing results in tabular format as a
+- [x] Create a search results panel containing results in tabular format as a
       collection of individual components containing the attributes of Meteorites
       meeting the search criteria.
-- [ ] Create a Meteorite component that is a stateless description of a single
+- [x] Create a Meteorite component that is a stateless description of a single
       meteorite strike. Iterate over the meteorite landing dataset, and create the
       collection of Meteorite components for the entries matching the search criteria
       specified by the user.
@@ -68,13 +68,13 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 **Functionality**
 
-- [ ] Meteorite landings are displayed in alphabetical order on the Name column.
+- [x] Meteorite landings are displayed in alphabetical order on the Name column.
 - [ ] Users may scroll through the list of landings, or use the search box to
       search for a names that include the entered search term.
-- [ ] Searches are case independent. This means the user may type searches in
+- [x] Searches are case independent. This means the user may type searches in
       lower, upper, or mixed case (like Case, case, or cASe) and the same results
       will be returned.
-- [ ] The results list can be reset to its original contents by clearing the
+- [x] The results list can be reset to its original contents by clearing the
       search box and clicking the 'Search' button
 
 **Other**
@@ -83,7 +83,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
       [Keys to a Well-Written Readme](https://medium.com/chingu/keys-to-a-well-written-readme-55c53d34fe6d))
 - [ ] Make sure that there are no errors in the developer console before
       submitting
-- [ ] Make sure you have handled edge cases such as,
+- [x] Make sure you have handled edge cases such as,
   - What happens if the API request takes too long?
   - What if the API returns an error?
   - What if the user submits an empty string?

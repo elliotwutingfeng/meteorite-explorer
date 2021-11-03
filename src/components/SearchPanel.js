@@ -12,14 +12,15 @@ function FullWidthTextField() {
     <Box
       sx={{
         display: "flex",
+
         justifyContent: "center",
       }}
     >
       <TextField
         label=""
         id="search"
-        placeholder="Enter search terms"
-        aria-placeholder="Enter search terms"
+        placeholder="Search by Name"
+        aria-placeholder="Search by Name"
         onChange={(e) => {
           dispatch(setFilter(e.target.value));
         }}
