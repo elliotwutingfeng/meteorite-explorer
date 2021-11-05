@@ -37,7 +37,7 @@ function App() {
         <TopAppBar />
       </Box>
       <Box sx={{ gridArea: "search" }}>
-        <SearchPanel />
+        <SearchPanel setPage={setPage} />
       </Box>
       <Box
         sx={{

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { TextScramble } from "@a7sc11u/scramble";
 import { Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -9,41 +10,54 @@ import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import { WaveLoading } from "react-loadingg";
 import { useSelector } from "react-redux";
 
-const columnNameMappings = {
-  name: "Name",
-  id: "Id",
-  nametype: "Name Type",
-  recclass: "Rec Class",
-  mass: "Mass (g)",
-  fall: "Fall",
-  year: "Year",
-  reclat: "Latitude",
-  reclong: "Longitude",
-};
-const columns = [
-  "name",
-  "id",
-  "nametype",
-  "recclass",
-  "mass",
-  "fall",
-  "year",
-  "reclat",
-  "reclong",
-].map((e) => {
+import { columnNameMappings } from "../dataBankSlice";
+
+const columns = Object.keys(columnNameMappings).map((e) => {
   return {
     field: e,
     headerName: columnNameMappings[e],
     sortable: false,
     editable: false,
     flex: 1,
-    minWidth: 160,
+    minWidth: 150,
+
+    renderHeader: (params) => {
+      return (
+        <TextScramble
+          as="div"
+          play={true}
+          speed={2}
+          scramble={8}
+          step={1}
+          stepInterval={1}
+          seed={3}
+          seedInterval={10}
+          text={params.colDef.headerName}
+        />
+      );
+    },
+
+    renderCell: (cellValues) => {
+      return (
+        <TextScramble
+          as="div"
+          play={true}
+          speed={2}
+          scramble={8}
+          step={1}
+          stepInterval={1}
+          seed={3}
+          seedInterval={10}
+          text={cellValues.value}
+        />
+      );
+    },
   };
 });
 
 function BasicPagination({ page, setPage, pageSize, numEntries }) {
   return (
-    <Stack spacing={2} alignItems="center">
+    <Stack alignItems="center">
       <Pagination
         count={Math.ceil(numEntries / pageSize)}
         page={page + 1}
@@ -83,7 +97,7 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
   return (
     <GridOverlay ref={ref} {...props} sx={{ zIndex: 1 }}>
       {loadingStatus === "pending" ? (
-        <WaveLoading color={theme.palette.primary.main} size="large" />
+        <WaveLoading color={theme.palette.warning.main} size="large" />
       ) : loadingStatus === "timed out" ? (
         <Typography>Failed to retrieve data from NASA</Typography>
       ) : (

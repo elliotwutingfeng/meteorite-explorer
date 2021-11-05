@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { fetchMeteorites, setFilter } from "../dataBankSlice";
 
-function FullWidthTextField() {
+function FullWidthTextField({ setPage }) {
   const dispatch = useDispatch();
   return (
     <Box
@@ -23,22 +23,23 @@ function FullWidthTextField() {
         onChange={(e) => {
           dispatch(setFilter(e.target.value));
         }}
-        color="success"
+        color="primary"
       />
       <Button
         variant="contained"
         disableRipple
         onClick={(e) => {
           e.preventDefault();
+          setPage(0);
           dispatch(fetchMeteorites());
         }}
-        color="success"
+        color="primary"
       >
         Search
       </Button>
     </Box>
   );
 }
-export default function SearchPanel() {
-  return <FullWidthTextField />;
+export default function SearchPanel({ setPage }) {
+  return <FullWidthTextField setPage={setPage} />;
 }

@@ -14,6 +14,18 @@ async function get_predictions() {
     .then((res) => res.data);
 }
 
+export const columnNameMappings = {
+  name: "Name",
+  id: "Id",
+  nametype: "Name Type",
+  recclass: "Rec Class",
+  mass: "Mass (g)",
+  fall: "Fall",
+  year: "Year",
+  reclat: "Latitude",
+  reclong: "Longitude",
+};
+
 // Data retrieval method
 export const fetchMeteorites = createAsyncThunk(
   "dataBank/fetchMeteorites",
@@ -23,12 +35,23 @@ export const fetchMeteorites = createAsyncThunk(
     try {
       const apiResponse = await get_predictions();
       //await wait(1000); // delay 1000ms
-      // If there are filterKeywords, filter apiResponse to include only
+
+      // Fill in missing fields
+      const fillNAResponse = apiResponse.map((e) => {
+        for (const columnName of Object.keys(columnNameMappings)) {
+          if (e[columnName] === undefined || e[columnName] === "") {
+            e[columnName] = `N/A`;
+          }
+        }
+        return e;
+      });
+
+      // If there are filterKeywords, filter fillNAResponse to include only
       // meteorites with names containing filterKeywords
       const filteredResponse =
         filterKeywords === ""
-          ? apiResponse
-          : apiResponse.filter((meteorite) => {
+          ? fillNAResponse
+          : fillNAResponse.filter((meteorite) => {
               return String(meteorite["name"])
                 .toLowerCase()
                 .includes(filterKeywords);
@@ -39,7 +62,15 @@ export const fetchMeteorites = createAsyncThunk(
           sensitivity: "base",
         });
       });
-      return sortedByAlphabet;
+      // Truncate 'Year' field
+      const yearTruncated = sortedByAlphabet.map((el) => {
+        return {
+          ...el,
+          year: el.year !== undefined ? el.year.split("-")[0] : el.year,
+        };
+      });
+
+      return yearTruncated;
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
@@ -54,7 +85,7 @@ const mainReducers = {
 
 const mainExtraReducers = {
   [fetchMeteorites.pending]: (state) => {
-    state.meteorites.data = [];
+    //state.meteorites.data = [];
     state.meteorites.status = "pending";
   },
   [fetchMeteorites.fulfilled]: (state, action) => {

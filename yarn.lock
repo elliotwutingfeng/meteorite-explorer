@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@a7sc11u/scramble@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@a7sc11u/scramble/-/scramble-0.0.6.tgz#97af23e54772987efbd5a5f5bcd94f5f29e203ec"
+  integrity sha512-iiBllEXYGx4ER3z1HGi5aHon8zDc5HABBi21/2Zd8VSWhO/XGb+ORyZ5O0BVHGGEfUejJuv0Zm/Dvtfyk4lpJQ==
+  dependencies:
+    "@radix-ui/react-polymorphic" "^0.0.1"
+
 "@babel/code-frame@7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -1776,6 +1783,11 @@
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
   integrity sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==
+
+"@radix-ui/react-polymorphic@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-polymorphic/-/react-polymorphic-0.0.1.tgz#52e1a22374eec05a34a902e112e081f36e7e2b3b"
+  integrity sha512-oKP9mx114Wr/UlSyo/wgsHdckfgq3+yKoIXmNThOGzzlN+cikppwxAZK+z6NriO0p5Hyka/8xSFqGZokiS9Lxw==
 
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"
