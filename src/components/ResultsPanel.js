@@ -54,7 +54,7 @@ function BasicPagination({ page, setPage, pageSize, numEntries }) {
         showLastButton
         variant="text"
         shape="rounded"
-        color="primary"
+        color="warning"
       />
     </Stack>
   );
@@ -105,7 +105,7 @@ export default function ResultsPanel({ page, setPage }) {
   const useStylesAntDesign = makeStyles(
     (theme) => ({
       root: {
-        border: `1px solid ${
+        border: `3px solid ${
           theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
         }`,
         color:
@@ -137,6 +137,11 @@ export default function ResultsPanel({ page, setPage }) {
           borderRight: `1px solid ${
             theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
           }`,
+          borderBottom: `1px solid ${
+            theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
+          }`,
+          color: theme.palette.warning.light,
+          fontWeight: theme.typography.fontWeightBold,
         },
         "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
           borderBottom: `1px solid ${
@@ -148,6 +153,7 @@ export default function ResultsPanel({ page, setPage }) {
             theme.palette.mode === "light"
               ? "rgba(0,0,0,.85)"
               : "rgba(255,255,255,0.85)",
+          fontWeight: theme.typography.fontWeightRegular,
           fontFamily: [
             "-apple-system",
             "BlinkMacSystemFont",
