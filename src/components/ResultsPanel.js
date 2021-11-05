@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
+import { Typography } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import { WaveLoading } from "react-loadingg";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -37,8 +40,59 @@ const columns = [
   };
 });
 
-export default function ResultsPanel() {
+function BasicPagination({ page, setPage, pageSize, numEntries }) {
+  return (
+    <Stack spacing={2} alignItems="center">
+      <Pagination
+        count={Math.ceil(numEntries / pageSize)}
+        page={page + 1}
+        onChange={(e, page) => {
+          setPage(page - 1);
+        }}
+        showFirstButton
+        showLastButton
+        variant="outlined"
+        shape="rounded"
+        color="primary"
+      />
+    </Stack>
+  );
+}
+
+const GridNoRowsOverlay = React.forwardRef(function GridNoRowsOverlay(
+  props,
+  ref
+) {
+  const meteorites = useSelector((state) => state.dataBank.meteorites.data);
+  return (
+    <GridOverlay ref={ref} {...props}>
+      {meteorites.length === 0 && <Typography>No matches found</Typography>}
+    </GridOverlay>
+  );
+});
+
+const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
+  props,
+  ref
+) {
   const theme = useTheme();
+  const loadingStatus = useSelector(
+    (state) => state.dataBank.meteorites.status
+  );
+  return (
+    <GridOverlay ref={ref} {...props} sx={{ zIndex: 1 }}>
+      {loadingStatus === "pending" ? (
+        <WaveLoading color={theme.palette.primary.main} size="large" />
+      ) : loadingStatus === "timed out" ? (
+        <Typography>Failed to retrieve data from NASA</Typography>
+      ) : (
+        <Typography>Failed to retrieve data from NASA</Typography>
+      )}
+    </GridOverlay>
+  );
+});
+
+export default function ResultsPanel() {
   // Fetch data on first page load
   const dispatch = useDispatch();
   useEffect(() => {
@@ -49,32 +103,37 @@ export default function ResultsPanel() {
   const loadingStatus = useSelector(
     (state) => state.dataBank.meteorites.status
   );
+
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+
   return (
-    <>
-      {loadingStatus === "up_to_date" ? (
-        meteorites.length === 0 ? (
-          "Search criteria found nothing!"
-        ) : (
-          <DataGrid
-            rows={meteorites}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection={false}
-            disableColumnMenu
-            disableSelectionOnClick
-            disableColumnSelector
-            disableColumnFilter
-            autoHeight
+    <DataGrid
+      rows={meteorites}
+      columns={columns}
+      pageSize={pageSize}
+      page={page}
+      rowsPerPageOptions={[pageSize]}
+      checkboxSelection={false}
+      disableColumnMenu
+      disableSelectionOnClick
+      disableColumnSelector
+      disableColumnFilter
+      autoHeight
+      sx={{ borderColor: "red" }}
+      loading={loadingStatus !== "up_to_date"}
+      components={{
+        Footer: () => (
+          <BasicPagination
+            page={page}
+            setPage={setPage}
+            pageSize={pageSize}
+            numEntries={meteorites.length}
           />
-        )
-      ) : loadingStatus === "pending" ? (
-        <WaveLoading color={theme.palette.primary.main} size="large" />
-      ) : loadingStatus === "timed out" ? (
-        "timed out"
-      ) : (
-        "failed"
-      )}
-    </>
+        ),
+        NoRowsOverlay: () => <GridNoRowsOverlay />,
+        LoadingOverlay: () => <GridLoadingOverlay />,
+      }}
+    />
   );
 }
