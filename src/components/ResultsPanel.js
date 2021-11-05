@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
@@ -6,9 +6,8 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import { WaveLoading } from "react-loadingg";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { fetchMeteorites } from "../dataBankSlice";
 const columnNameMappings = {
   name: "Name",
   id: "Id",
@@ -37,6 +36,7 @@ const columns = [
     sortable: false,
     editable: false,
     flex: 1,
+    minWidth: 160,
   };
 });
 
@@ -92,20 +92,13 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
   );
 });
 
-export default function ResultsPanel() {
-  // Fetch data on first page load
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMeteorites());
-  }, [dispatch]);
-
+export default function ResultsPanel({ page, setPage }) {
   const meteorites = useSelector((state) => state.dataBank.meteorites.data);
   const loadingStatus = useSelector(
     (state) => state.dataBank.meteorites.status
   );
 
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const pageSize = 10;
 
   return (
     <DataGrid

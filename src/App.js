@@ -1,18 +1,40 @@
-import { Container } from "@mui/material";
+import { useState } from "react";
+
+import { Box } from "@mui/system";
 
 import ResultsPanel from "./components/ResultsPanel";
 import SearchPanel from "./components/SearchPanel";
 import TopAppBar from "./components/TopAppBar";
 
 function App() {
+  const [page, setPage] = useState(0);
   return (
-    <>
-      <TopAppBar />
-      <Container maxWidth="xl">
+    <Box
+      sx={{
+        display: "grid",
+        width: "100vw",
+        height: "100vh",
+        gridTemplateColumns:
+          "minmax(10px, 1fr) minmax(10px, 8fr) minmax(10px, 1fr)",
+        gap: 1,
+        gridTemplateRows: "min-content min-content minmax(10px, 1fr)",
+        gridTemplateAreas: `"header header header"
+    "search search search"
+    ". results ."`,
+      }}
+    >
+      <Box sx={{ gridArea: "header" }}>
+        <TopAppBar />
+      </Box>
+      <Box sx={{ gridArea: "search" }}>
         <SearchPanel />
-        <ResultsPanel />
-      </Container>
-    </>
+      </Box>
+      <Box
+        sx={{ gridArea: "results", display: "flex", alignItems: "flex-start" }}
+      >
+        <ResultsPanel {...{ page, setPage }} />
+      </Box>
+    </Box>
   );
 }
 

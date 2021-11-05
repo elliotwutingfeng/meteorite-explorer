@@ -12,7 +12,6 @@ function FullWidthTextField() {
     <Box
       sx={{
         display: "flex",
-
         justifyContent: "center",
       }}
     >
