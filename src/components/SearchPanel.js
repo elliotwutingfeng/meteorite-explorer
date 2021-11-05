@@ -23,6 +23,7 @@ function FullWidthTextField() {
         onChange={(e) => {
           dispatch(setFilter(e.target.value));
         }}
+        color="success"
       />
       <Button
         variant="contained"
@@ -31,6 +32,7 @@ function FullWidthTextField() {
           e.preventDefault();
           dispatch(fetchMeteorites());
         }}
+        color="success"
       >
         Search
       </Button>

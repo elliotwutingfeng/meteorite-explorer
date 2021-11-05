@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Box } from "@mui/system";
+import { useDispatch } from "react-redux";
 
 import ResultsPanel from "./components/ResultsPanel";
 import SearchPanel from "./components/SearchPanel";
 import TopAppBar from "./components/TopAppBar";
+import { fetchMeteorites } from "./dataBankSlice";
 
 function App() {
+  const dispatch = useDispatch();
   const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    dispatch(fetchMeteorites());
+  }, [dispatch]);
+
   return (
     <Box
       sx={{
@@ -21,6 +29,8 @@ function App() {
         gridTemplateAreas: `"header header header"
     "search search search"
     ". results ."`,
+        bgcolor: "background.default",
+        color: "text.primary",
       }}
     >
       <Box sx={{ gridArea: "header" }}>
@@ -30,7 +40,11 @@ function App() {
         <SearchPanel />
       </Box>
       <Box
-        sx={{ gridArea: "results", display: "flex", alignItems: "flex-start" }}
+        sx={{
+          gridArea: "results",
+          display: "flex",
+          alignItems: "flex-start",
+        }}
       >
         <ResultsPanel {...{ page, setPage }} />
       </Box>

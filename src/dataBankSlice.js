@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+/*
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+*/
 
 async function get_predictions() {
   return axios
@@ -21,7 +22,7 @@ export const fetchMeteorites = createAsyncThunk(
     const filterKeywords = getState().dataBank.filter.toLowerCase();
     try {
       const apiResponse = await get_predictions();
-      await wait(1000); // delay 500ms
+      //await wait(1000); // delay 1000ms
       // If there are filterKeywords, filter apiResponse to include only
       // meteorites with names containing filterKeywords
       const filteredResponse =

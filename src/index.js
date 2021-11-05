@@ -1,5 +1,6 @@
 import React from "react";
 
+import "./index.css";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ReactDOM from "react-dom";
@@ -8,7 +9,11 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./store";
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
