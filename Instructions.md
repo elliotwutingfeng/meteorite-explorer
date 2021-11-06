@@ -93,7 +93,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
       Once you're done with the requirements and the console is free of
       errors, deploy your application. You can use services like
       Netlify or Heroku. It's up to you!
-- [ ] Make your design fully responsive (see
+- [x] Make your design fully responsive (see
       [Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive))
 
 **Extras (Not Required)**

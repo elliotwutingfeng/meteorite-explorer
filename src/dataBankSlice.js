@@ -77,10 +77,22 @@ export const fetchMeteorites = createAsyncThunk(
   }
 );
 
-const filterReducers = {
+const searchReducers = {
   setFilter(state, action) {
     state.filter = action.payload;
   },
+  appendSearchHistory(state, action) {
+    const searchTerm = action.payload;
+    if (!state.searchHistory.includes(searchTerm)) {
+      // Add searchTerm to searchHistory if it is not already in searchHistory.
+      state.searchHistory.push(action.payload);
+      // Delete oldest searchTerms from searchHistory until searchHistory length <= 10
+      state.searchHistory.splice(0, state.searchHistory.length - 10);
+    }
+  },
+};
+
+const pageReducers = {
   setPage(state, action) {
     state.page = action.payload;
   },
@@ -107,14 +119,17 @@ export const dataBankSlice = createSlice({
     page: 0,
     filter: "",
     meteorites: { data: [], status: "pending" },
+    searchHistory: [],
   },
   reducers: {
-    ...filterReducers,
+    ...searchReducers,
+    ...pageReducers,
   },
   extraReducers: {
     ...meteoriteExtraReducers,
   },
 });
 
-export const { setFilter, setPage } = dataBankSlice.actions;
+export const { setFilter, setPage, appendSearchHistory } =
+  dataBankSlice.actions;
 export default dataBankSlice.reducer;
