@@ -15,13 +15,14 @@ const theme = createTheme({
     primary: {
       main: "#EBBF55",
       light: "#FCD96F",
-      dark: "#755726",
+      dark: "#EBBF55",
       contrastText: "#0B0C0F",
     },
     background: {
       paper: "#0B0C0F",
       default: "#0B0C0F",
     },
+    action: { hover: "rgba(117,87,38,0.3)", hoverOpacity: 0.3 },
   },
   components: {
     MuiButtonBase: {

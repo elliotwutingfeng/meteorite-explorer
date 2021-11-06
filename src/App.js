@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 
+import Description from "./components/Description";
 import Footer from "./components/Footer";
 import ResultsPanel from "./components/ResultsPanel";
 import SearchPanel from "./components/SearchPanel";
@@ -11,7 +12,6 @@ import { fetchMeteorites } from "./dataBankSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
 
   useEffect(() => {
     dispatch(fetchMeteorites());
@@ -27,8 +27,9 @@ function App() {
           "minmax(10px, 1fr) minmax(10px, 8fr) minmax(10px, 1fr)",
         gap: 1,
         gridTemplateRows:
-          "min-content min-content min-content minmax(10px,1fr)",
+          "fit-content fit-content fit-content fit-content minmax(10px,1fr)",
         gridTemplateAreas: `"header header header"
+    "description description description"
     "search search search"
     ". results ."
     "footer footer footer"`,
@@ -39,15 +40,18 @@ function App() {
       <Box sx={{ gridArea: "header" }}>
         <TopAppBar />
       </Box>
+      <Box sx={{ gridArea: "description" }}>
+        <Description />
+      </Box>
       <Box sx={{ gridArea: "search" }}>
-        <SearchPanel setPage={setPage} />
+        <SearchPanel />
       </Box>
       <Box
         sx={{
           gridArea: "results",
         }}
       >
-        <ResultsPanel {...{ page, setPage }} />
+        <ResultsPanel />
       </Box>
       <Box
         sx={{
@@ -55,6 +59,7 @@ function App() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          height: "100%",
         }}
       >
         <Footer />

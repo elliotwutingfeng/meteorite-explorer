@@ -5,9 +5,9 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 
-import { fetchMeteorites, setFilter } from "../dataBankSlice";
+import { fetchMeteorites, setFilter, setPage } from "../dataBankSlice";
 
-function FullWidthTextField({ setPage }) {
+function FullWidthTextField() {
   const dispatch = useDispatch();
 
   return (
@@ -31,7 +31,7 @@ function FullWidthTextField({ setPage }) {
       <Button
         variant="contained"
         onClick={() => {
-          setPage(0);
+          dispatch(setPage(0));
           dispatch(fetchMeteorites());
         }}
         color="primary"
@@ -41,6 +41,6 @@ function FullWidthTextField({ setPage }) {
     </Box>
   );
 }
-export default function SearchPanel({ setPage }) {
-  return <FullWidthTextField setPage={setPage} />;
+export default function SearchPanel() {
+  return <FullWidthTextField />;
 }

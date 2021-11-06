@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import { WaveLoading } from "react-loadingg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { columnNameMappings } from "../dataBankSlice";
+import { columnNameMappings, setPage } from "../dataBankSlice";
 
 const columns = Object.keys(columnNameMappings).map((e) => {
   return {
@@ -24,7 +24,6 @@ const columns = Object.keys(columnNameMappings).map((e) => {
     renderHeader: (params) => {
       return (
         <TextScramble
-          as="div"
           play={true}
           speed={1}
           scramble={8}
@@ -39,9 +38,8 @@ const columns = Object.keys(columnNameMappings).map((e) => {
 
     renderCell: (cellValues) => {
       return (
-        <Typography variant="body">
+        <Typography variant="body1">
           <TextScramble
-            as="div"
             play={true}
             speed={1}
             scramble={8}
@@ -57,14 +55,16 @@ const columns = Object.keys(columnNameMappings).map((e) => {
   };
 });
 
-function BasicPagination({ page, setPage, pageSize, numEntries }) {
+function BasicPagination({ pageSize, numEntries }) {
+  const dispatch = useDispatch();
+  const page = useSelector((state) => state.dataBank.page);
   return (
     <Stack alignItems="center">
       <Pagination
         count={Math.ceil(numEntries / pageSize)}
         page={page + 1}
         onChange={(e, page) => {
-          setPage(page - 1);
+          dispatch(setPage(page - 1));
         }}
         showFirstButton
         showLastButton
@@ -109,11 +109,12 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
   );
 });
 
-export default function ResultsPanel({ page, setPage }) {
+export default function ResultsPanel() {
   const meteorites = useSelector((state) => state.dataBank.meteorites.data);
   const loadingStatus = useSelector(
     (state) => state.dataBank.meteorites.status
   );
+  const page = useSelector((state) => state.dataBank.page);
 
   const pageSize = 10;
 
@@ -262,8 +263,8 @@ export default function ResultsPanel({ page, setPage }) {
       className={antDesignClasses.root}
       rows={meteorites}
       columns={columns}
-      pageSize={pageSize}
       page={page}
+      pageSize={pageSize}
       rowsPerPageOptions={[pageSize]}
       checkboxSelection={false}
       disableColumnMenu
@@ -275,12 +276,7 @@ export default function ResultsPanel({ page, setPage }) {
       loading={loadingStatus !== "up_to_date"}
       components={{
         Footer: () => (
-          <BasicPagination
-            page={page}
-            setPage={setPage}
-            pageSize={pageSize}
-            numEntries={meteorites.length}
-          />
+          <BasicPagination pageSize={pageSize} numEntries={meteorites.length} />
         ),
         NoRowsOverlay: () => <GridNoRowsOverlay />,
         LoadingOverlay: () => <GridLoadingOverlay />,

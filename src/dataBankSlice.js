@@ -81,6 +81,9 @@ const filterReducers = {
   setFilter(state, action) {
     state.filter = action.payload;
   },
+  setPage(state, action) {
+    state.page = action.payload;
+  },
 };
 
 const meteoriteExtraReducers = {
@@ -101,6 +104,7 @@ const meteoriteExtraReducers = {
 export const dataBankSlice = createSlice({
   name: "dataBank",
   initialState: {
+    page: 0,
     filter: "",
     meteorites: { data: [], status: "pending" },
   },
@@ -112,5 +116,5 @@ export const dataBankSlice = createSlice({
   },
 });
 
-export const { setFilter } = dataBankSlice.actions;
+export const { setFilter, setPage } = dataBankSlice.actions;
 export default dataBankSlice.reducer;
