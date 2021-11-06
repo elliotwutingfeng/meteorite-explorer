@@ -8,7 +8,7 @@ function wait(ms) {
 async function get_predictions() {
   return axios
     .get("https://data.nasa.gov/resource/gh4g-9sfh.json", {
-      timeout: 5000, // 5000ms request timeout
+      timeout: 15000, // 15000ms request timeout
     })
     .then((res) => res.data);
 }
