@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-/*
+
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-*/
+
 async function get_predictions() {
   return axios
     .get("https://data.nasa.gov/resource/gh4g-9sfh.json", {
@@ -33,12 +33,12 @@ export const fetchMeteorites = createAsyncThunk(
     const filterKeywords = getState().dataBank.filter.toLowerCase();
     try {
       const apiResponse = await get_predictions();
-      // await wait(500); // delay 500ms
+      await wait(100); // delay 100ms
 
       // Fill in missing fields
       const fillNAResponse = apiResponse.map((e) => {
         for (const columnName of Object.keys(columnNameMappings)) {
-          if (e[columnName] === undefined || e[columnName] === "") {
+          if (typeof e[columnName] === "undefined" || e[columnName] === "") {
             e[columnName] = `N/A`;
           }
         }
@@ -65,7 +65,8 @@ export const fetchMeteorites = createAsyncThunk(
       const yearTruncated = sortedByAlphabet.map((el) => {
         return {
           ...el,
-          year: el.year !== undefined ? el.year.split("-")[0] : el.year,
+          year:
+            typeof el.year !== "undefined" ? el.year.split("-")[0] : el.year,
         };
       });
 
@@ -117,7 +118,7 @@ const meteoriteExtraReducers = {
   },
   [fetchMeteorites.rejected]: (state, action) => {
     state.page = 0;
-    state.meteorites.status = action.payload.message.includes("timeout of")
+    state.meteorites.status = action.payload?.message?.includes("timeout of")
       ? "timed out"
       : "failed";
   },

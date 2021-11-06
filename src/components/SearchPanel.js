@@ -26,21 +26,31 @@ function FullWidthTextField() {
     >
       <Autocomplete
         disablePortal
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            dispatch(fetchMeteorites());
+            dispatch(appendSearchHistory(filter));
+            event.target.blur();
+          }
+        }}
         freeSolo
-        id="autocomplete-search"
+        blurOnSelect
         options={searchHistory}
         sx={{ width: 300 }}
-        onChange={(e, newValue) => {
-          dispatch(setFilter(newValue === null ? "" : newValue.label));
-        }}
         onInputChange={(e, newInputValue) => {
-          dispatch(setFilter(newInputValue));
+          dispatch(
+            setFilter(
+              typeof newInputValue === "undefined" || newInputValue === null
+                ? ""
+                : newInputValue
+            )
+          );
         }}
         renderInput={(params) => (
           <TextField
             {...params}
+            inputProps={{ ...params.inputProps }}
             label=""
-            id="search"
             placeholder="Search by Name"
             aria-placeholder="Search by Name"
             color="primary"
