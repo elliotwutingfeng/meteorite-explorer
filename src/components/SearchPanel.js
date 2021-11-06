@@ -12,7 +12,7 @@ import {
   setFilter,
 } from "../dataBankSlice";
 
-function FullWidthTextField() {
+export default function SearchPanel() {
   const dispatch = useDispatch();
 
   const searchHistory = useSelector((state) => state.dataBank.searchHistory);
@@ -84,7 +84,4 @@ function FullWidthTextField() {
       </Button>
     </Box>
   );
-}
-export default function SearchPanel() {
-  return <FullWidthTextField />;
 }
