@@ -1,15 +1,22 @@
 import * as React from "react";
 
+import { Autocomplete } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { fetchMeteorites, setFilter } from "../dataBankSlice";
+import {
+  appendSearchHistory,
+  fetchMeteorites,
+  setFilter,
+} from "../dataBankSlice";
 
 function FullWidthTextField() {
   const dispatch = useDispatch();
 
+  const searchHistory = useSelector((state) => state.dataBank.searchHistory);
+  const filter = useSelector((state) => state.dataBank.filter);
   return (
     <Box
       sx={{
@@ -17,21 +24,35 @@ function FullWidthTextField() {
         justifyContent: "center",
       }}
     >
-      <TextField
-        label=""
-        id="search"
-        placeholder="Search by Name"
-        aria-placeholder="Search by Name"
-        onChange={(e) => {
-          dispatch(setFilter(e.target.value));
+      <Autocomplete
+        disablePortal
+        freeSolo
+        id="autocomplete-search"
+        options={searchHistory}
+        sx={{ width: 300 }}
+        onChange={(e, newValue) => {
+          dispatch(setFilter(newValue === null ? "" : newValue.label));
         }}
-        color="primary"
-        autoComplete="off"
+        onInputChange={(e, newInputValue) => {
+          dispatch(setFilter(newInputValue));
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label=""
+            id="search"
+            placeholder="Search by Name"
+            aria-placeholder="Search by Name"
+            color="primary"
+          />
+        )}
       />
+
       <Button
         variant="contained"
         onClick={() => {
           dispatch(fetchMeteorites());
+          dispatch(appendSearchHistory(filter));
         }}
         color="primary"
       >

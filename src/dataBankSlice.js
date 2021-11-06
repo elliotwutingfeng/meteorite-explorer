@@ -82,11 +82,20 @@ const searchReducers = {
   },
   appendSearchHistory(state, action) {
     const searchTerm = action.payload;
-    if (!state.searchHistory.includes(searchTerm)) {
+    if (searchTerm === "") {
+      return;
+    }
+
+    if (state.searchHistory.some((e) => e.label === searchTerm)) {
+      // Bubble existing searchTerm to the top
+      state.searchHistory = [{ label: searchTerm }].concat(
+        state.searchHistory.filter((e) => e.label !== searchTerm)
+      );
+    } else {
       // Add searchTerm to searchHistory if it is not already in searchHistory.
-      state.searchHistory.push(action.payload);
+      state.searchHistory.unshift({ label: searchTerm });
       // Delete oldest searchTerms from searchHistory until searchHistory length <= 10
-      state.searchHistory.splice(0, state.searchHistory.length - 10);
+      state.searchHistory = state.searchHistory.slice(0, 10);
     }
   },
 };

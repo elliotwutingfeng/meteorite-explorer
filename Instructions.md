@@ -98,7 +98,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 **Extras (Not Required)**
 
-- [ ] When the user begins typing search terms display a dropdown with the
+- [x] When the user begins typing search terms display a dropdown with the
       last 10 search terms. This should be updated to match what the user enters
       as she types.
 - [ ] Use Accessibility techniques (see
