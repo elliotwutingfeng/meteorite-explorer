@@ -1,6 +1,8 @@
 import React from "react";
 
 import { TextScramble } from "@a7sc11u/scramble";
+import ErrorIcon from "@mui/icons-material/Error";
+import HourglassBottom from "@mui/icons-material/HourglassBottom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
@@ -101,9 +103,57 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
       {loadingStatus === "pending" ? (
         <WaveLoading color={theme.palette.primary.main} size="large" />
       ) : loadingStatus === "timed out" ? (
-        <Typography>Failed to retrieve data from NASA</Typography>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <HourglassBottom
+              fontSize="large"
+              sx={{ color: theme.palette.primary.main }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="body1" color={theme.palette.primary.main}>
+              No Data: Request timed out
+            </Typography>
+          </div>
+        </div>
       ) : (
-        <Typography>Failed to retrieve data from NASA</Typography>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ErrorIcon
+              fontSize="large"
+              sx={{ color: theme.palette.primary.main }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="body1" color={theme.palette.primary.main}>
+              No Data: Server unreachable
+            </Typography>
+          </div>
+        </div>
       )}
     </GridOverlay>
   );
@@ -261,6 +311,8 @@ export default function ResultsPanel() {
   return (
     <DataGrid
       className={antDesignClasses.root}
+      columnBuffer={pageSize} // DataGrid column virtualization; prevents disappearing column headers when resizing
+      columnThreshold={pageSize} // DataGrid column virtualization; prevents disappearing column headers when resizing
       rows={meteorites}
       columns={columns}
       page={page}
