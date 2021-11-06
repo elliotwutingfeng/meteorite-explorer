@@ -1,6 +1,7 @@
 import React from "react";
 
 import { TextScramble } from "@a7sc11u/scramble";
+import CancelIcon from "@mui/icons-material/Cancel";
 import ErrorIcon from "@mui/icons-material/Error";
 import HourglassBottom from "@mui/icons-material/HourglassBottom";
 import Pagination from "@mui/material/Pagination";
@@ -82,10 +83,37 @@ const GridNoRowsOverlay = React.forwardRef(function GridNoRowsOverlay(
   props,
   ref
 ) {
+  const theme = useTheme();
   const meteorites = useSelector((state) => state.dataBank.meteorites.data);
   return (
     <GridOverlay ref={ref} {...props}>
-      {meteorites.length === 0 && <Typography>No matches found</Typography>}
+      {meteorites.length === 0 && (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CancelIcon
+              fontSize="large"
+              sx={{ color: theme.palette.primary.main }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="body1" color={theme.palette.primary.main}>
+              No matches found
+            </Typography>
+          </div>
+        </div>
+      )}
     </GridOverlay>
   );
 });
