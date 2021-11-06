@@ -1720,7 +1720,7 @@
     prop-types "^15.7.2"
     react-is "^17.0.2"
 
-"@mui/x-data-grid@^5.0.0-beta.6":
+"@mui/x-data-grid@^5.0.0-beta.7":
   version "5.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.0.0-beta.7.tgz#270e4cef5bd6fb9db02f26a36b8d68eff1127bc4"
   integrity sha512-0h7uJ/1xvXghJwGPRFcPUPB0zNlKpfAqFU2dBdAtUl6DK2ca1cPfd+sLNzApa4yvxjGUxLyNxvcc5xutka0t8A==
