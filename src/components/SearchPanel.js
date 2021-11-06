@@ -37,6 +37,20 @@ function FullWidthTextField() {
         blurOnSelect
         options={searchHistory}
         sx={{ width: 300 }}
+        onChange={(event, newValue) => {
+          if (event.type === "click") {
+            dispatch(
+              setFilter(
+                typeof newValue === "undefined" || newValue === null
+                  ? ""
+                  : newValue.label
+              )
+            );
+            dispatch(fetchMeteorites());
+            dispatch(appendSearchHistory(filter));
+            event.target.blur();
+          }
+        }}
         onInputChange={(e, newInputValue) => {
           dispatch(
             setFilter(
