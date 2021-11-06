@@ -9,7 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
-import { WaveLoading } from "react-loadingg";
+import { MeteorRainLoading } from "react-loadingg";
 import { useDispatch, useSelector } from "react-redux";
 
 import { columnNameMappings, setPage } from "../dataBankSlice";
@@ -101,7 +101,11 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
   return (
     <GridOverlay ref={ref} {...props} sx={{ zIndex: 1 }}>
       {loadingStatus === "pending" ? (
-        <WaveLoading color={theme.palette.primary.main} size="large" />
+        <MeteorRainLoading
+          color={theme.palette.primary.main}
+          size="large"
+          speed={0.5}
+        />
       ) : loadingStatus === "timed out" ? (
         <div>
           <div

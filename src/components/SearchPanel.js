@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 
-import { fetchMeteorites, setFilter, setPage } from "../dataBankSlice";
+import { fetchMeteorites, setFilter } from "../dataBankSlice";
 
 function FullWidthTextField() {
   const dispatch = useDispatch();
@@ -31,7 +31,6 @@ function FullWidthTextField() {
       <Button
         variant="contained"
         onClick={() => {
-          dispatch(setPage(0));
           dispatch(fetchMeteorites());
         }}
         color="primary"
