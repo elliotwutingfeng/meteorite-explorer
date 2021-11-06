@@ -12,7 +12,11 @@ export default function Description() {
           justifyContent: "center",
         }}
       >
-        <Typography variant="body1" color={theme.palette.primary.main}>
+        <Typography
+          variant="body1"
+          color={theme.palette.primary.main}
+          align="center"
+        >
           {`Explore The Meteoritical Society's comprehensive data set of all
           known meteorite landings across the globe.`}
         </Typography>

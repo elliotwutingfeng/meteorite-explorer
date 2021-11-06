@@ -26,7 +26,9 @@ export default function Footer() {
           justifyContent: "center",
         }}
       >
-        <Typography variant="body1">Created by © Wu Tingfeng</Typography>
+        <Typography variant="body1" align="center">
+          Created by © Wu Tingfeng
+        </Typography>
       </div>
 
       <div
@@ -36,7 +38,7 @@ export default function Footer() {
           justifyContent: "center",
         }}
       >
-        <Typography variant="body1">
+        <Typography variant="body1" align="center">
           Dataset provided by{" "}
           <Link href="http://www.meteoriticalsociety.org/">
             The Meteoritical Society
