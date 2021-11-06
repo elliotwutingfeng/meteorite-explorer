@@ -79,7 +79,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 **Other**
 
-- [ ] Your repo needs to have a robust `README.md` (see
+- [x] Your repo needs to have a robust `README.md` (see
       [Keys to a Well-Written Readme](https://medium.com/chingu/keys-to-a-well-written-readme-55c53d34fe6d))
 - [x] Make sure that there are no errors in the developer console before
       submitting

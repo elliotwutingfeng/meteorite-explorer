@@ -26,6 +26,7 @@ export default function SearchPanel() {
     >
       <Autocomplete
         disablePortal
+        disableClearable
         onKeyDown={(event) => {
           if (event.key === "Enter") {
             dispatch(fetchMeteorites());
@@ -36,7 +37,7 @@ export default function SearchPanel() {
         freeSolo
         blurOnSelect
         options={searchHistory}
-        sx={{ width: 300 }}
+        sx={{ width: 250 }}
         onChange={(event, newValue) => {
           if (event.type === "click") {
             dispatch(

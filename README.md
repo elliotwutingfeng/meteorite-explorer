@@ -8,9 +8,13 @@ Live Link: To be deployed...
 
 ## Features
 
-- [x] The data is sorted according to name and displayed on a table.
-- [x] Search results are separated into pages.
-- [x] A search field allows for filtering of meteorites by _Name_ when the _Search_ button is pressed.
+- [x] The data is sorted according to name and displayed on a table
+- [x] Search results are separated into pages
+- [x] A search field allows for filtering of meteorites by _Name_
+- [x] Search field displays a dropdown with the last 10 search terms
+- [x] 3 mobile-friendly ways to search: 1) Press _Search_ button 2) Press _Enter_ key 3) _Select_ previously-searched term from dropdown menu
+- [x] Display appropriate error notifications if API GET request fails or takes too long (more than 5 seconds).
+- [x] For fun: Text-scrambling effect on page load and meteor shower loading animation
 
 ## Setup instructions
 
