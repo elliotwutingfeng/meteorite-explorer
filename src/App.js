@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 
+import Footer from "./components/Footer";
 import ResultsPanel from "./components/ResultsPanel";
 import SearchPanel from "./components/SearchPanel";
 import TopAppBar from "./components/TopAppBar";
@@ -20,15 +21,17 @@ function App() {
     <Box
       sx={{
         display: "grid",
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         gridTemplateColumns:
           "minmax(10px, 1fr) minmax(10px, 8fr) minmax(10px, 1fr)",
         gap: 1,
-        gridTemplateRows: "min-content min-content minmax(10px, 1fr)",
+        gridTemplateRows:
+          "min-content min-content min-content minmax(10px,1fr)",
         gridTemplateAreas: `"header header header"
     "search search search"
-    ". results ."`,
+    ". results ."
+    "footer footer footer"`,
         bgcolor: "background.default",
         color: "text.primary",
       }}
@@ -42,11 +45,19 @@ function App() {
       <Box
         sx={{
           gridArea: "results",
-          display: "flex",
-          alignItems: "flex-start",
         }}
       >
         <ResultsPanel {...{ page, setPage }} />
+      </Box>
+      <Box
+        sx={{
+          gridArea: "footer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Footer />
       </Box>
     </Box>
   );

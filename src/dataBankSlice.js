@@ -77,15 +77,14 @@ export const fetchMeteorites = createAsyncThunk(
   }
 );
 
-const mainReducers = {
+const filterReducers = {
   setFilter(state, action) {
     state.filter = action.payload;
   },
 };
 
-const mainExtraReducers = {
+const meteoriteExtraReducers = {
   [fetchMeteorites.pending]: (state) => {
-    //state.meteorites.data = [];
     state.meteorites.status = "pending";
   },
   [fetchMeteorites.fulfilled]: (state, action) => {
@@ -106,10 +105,10 @@ export const dataBankSlice = createSlice({
     meteorites: { data: [], status: "pending" },
   },
   reducers: {
-    ...mainReducers,
+    ...filterReducers,
   },
   extraReducers: {
-    ...mainExtraReducers,
+    ...meteoriteExtraReducers,
   },
 });
 

@@ -1,10 +1,10 @@
 import React from "react";
 
 import { TextScramble } from "@a7sc11u/scramble";
-import { Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import { WaveLoading } from "react-loadingg";
@@ -26,7 +26,7 @@ const columns = Object.keys(columnNameMappings).map((e) => {
         <TextScramble
           as="div"
           play={true}
-          speed={2}
+          speed={1}
           scramble={8}
           step={1}
           stepInterval={1}
@@ -39,17 +39,19 @@ const columns = Object.keys(columnNameMappings).map((e) => {
 
     renderCell: (cellValues) => {
       return (
-        <TextScramble
-          as="div"
-          play={true}
-          speed={2}
-          scramble={8}
-          step={1}
-          stepInterval={1}
-          seed={3}
-          seedInterval={10}
-          text={cellValues.value}
-        />
+        <Typography variant="body">
+          <TextScramble
+            as="div"
+            play={true}
+            speed={1}
+            scramble={8}
+            step={1}
+            stepInterval={1}
+            seed={3}
+            seedInterval={10}
+            text={cellValues.value}
+          />
+        </Typography>
       );
     },
   };
@@ -68,7 +70,7 @@ function BasicPagination({ page, setPage, pageSize, numEntries }) {
         showLastButton
         variant="text"
         shape="rounded"
-        color="warning"
+        color="primary"
       />
     </Stack>
   );
@@ -97,7 +99,7 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
   return (
     <GridOverlay ref={ref} {...props} sx={{ zIndex: 1 }}>
       {loadingStatus === "pending" ? (
-        <WaveLoading color={theme.palette.warning.main} size="large" />
+        <WaveLoading color={theme.palette.primary.main} size="large" />
       ) : loadingStatus === "timed out" ? (
         <Typography>Failed to retrieve data from NASA</Typography>
       ) : (
@@ -154,7 +156,7 @@ export default function ResultsPanel({ page, setPage }) {
           borderBottom: `1px solid ${
             theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
           }`,
-          color: theme.palette.warning.light,
+          color: theme.palette.primary.light,
           fontWeight: theme.typography.fontWeightBold,
         },
         "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {

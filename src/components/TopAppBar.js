@@ -8,7 +8,9 @@ export default function TopAppBar() {
     <AppBar position="static" sx={{ alignItems: "center" }}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Meteorite Explorer
+          <span role="img" aria-label="comet">
+            ☄️ Meteorite Explorer
+          </span>
         </Typography>
       </Toolbar>
     </AppBar>

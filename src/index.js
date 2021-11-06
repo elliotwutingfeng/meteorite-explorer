@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./index.css";
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -12,6 +12,23 @@ import { store } from "./store";
 const theme = createTheme({
   palette: {
     mode: "dark",
+    primary: {
+      main: "#EBBF55",
+      light: "#FCD96F",
+      dark: "#755726",
+      contrastText: "#0B0C0F",
+    },
+    background: {
+      paper: "#0B0C0F",
+      default: "#0B0C0F",
+    },
+  },
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true, // Disable button ripple globally
+      },
+    },
   },
 });
 

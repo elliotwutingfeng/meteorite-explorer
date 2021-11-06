@@ -61,7 +61,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 **Style**
 
-- [ ] You may implement any style you choose. However, it should be consistent
+- [x] You may implement any style you choose. However, it should be consistent
       (e.g. font, font size, color scheme, layout, etc.).
   - See [Consistent Web Design](https://1stwebdesigner.com/consistent-web-design/)
   - See [Why is consistency important in Web Design?](https://laceytechsolutions.co.uk/blog/importance-of-consistency-in-web-design/)
@@ -69,7 +69,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 **Functionality**
 
 - [x] Meteorite landings are displayed in alphabetical order on the Name column.
-- [ ] Users may scroll through the list of landings, or use the search box to
+- [x] Users may scroll through the list of landings, or use the search box to
       search for a names that include the entered search term.
 - [x] Searches are case independent. This means the user may type searches in
       lower, upper, or mixed case (like Case, case, or cASe) and the same results
@@ -81,7 +81,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
 
 - [ ] Your repo needs to have a robust `README.md` (see
       [Keys to a Well-Written Readme](https://medium.com/chingu/keys-to-a-well-written-readme-55c53d34fe6d))
-- [ ] Make sure that there are no errors in the developer console before
+- [x] Make sure that there are no errors in the developer console before
       submitting
 - [x] Make sure you have handled edge cases such as,
   - What happens if the API request takes too long?

@@ -1,13 +1,15 @@
 import * as React from "react";
 
-import { Button, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 
 import { fetchMeteorites, setFilter } from "../dataBankSlice";
 
 function FullWidthTextField({ setPage }) {
   const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -24,12 +26,11 @@ function FullWidthTextField({ setPage }) {
           dispatch(setFilter(e.target.value));
         }}
         color="primary"
+        autoComplete="off"
       />
       <Button
         variant="contained"
-        disableRipple
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => {
           setPage(0);
           dispatch(fetchMeteorites());
         }}
