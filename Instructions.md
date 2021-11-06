@@ -89,7 +89,7 @@ Library](https://voyage.docs.chingu.io/prework/howwork).
   - What if the user submits an empty string?
   - What if the user enters garbage as search criteria?
   - What if the API returns 0 results?
-- [ ] Deploy your website <br/>
+- [x] Deploy your website <br/>
       Once you're done with the requirements and the console is free of
       errors, deploy your application. You can use services like
       Netlify or Heroku. It's up to you!
