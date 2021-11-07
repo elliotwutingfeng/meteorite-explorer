@@ -21,7 +21,7 @@ export const fetchMeteorites = createAsyncThunk(
     const filterKeywords = getState().dataBank.filter.toLowerCase();
 
     try {
-      const uri = `http://localhost:3000/api/meteorite-landings${
+      const uri = `api/meteorite-landings${
         filterKeywords !== "" ? `/${filterKeywords}` : ""
       }`;
       return await axios.get(uri).then((res) => res.data);
