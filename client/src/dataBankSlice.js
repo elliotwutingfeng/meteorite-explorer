@@ -5,7 +5,7 @@ function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function get_predictions() {
+async function fetch_meteorite_dataset() {
   return axios
     .get("https://data.nasa.gov/resource/gh4g-9sfh.json", {
       timeout: 15000, // 15000ms request timeout
@@ -32,7 +32,7 @@ export const fetchMeteorites = createAsyncThunk(
   async (obj = {}, { getState, rejectWithValue }) => {
     const filterKeywords = getState().dataBank.filter.toLowerCase();
     try {
-      const apiResponse = await get_predictions();
+      const apiResponse = await fetch_meteorite_dataset();
       await wait(100); // delay 100ms
 
       // Fill in missing fields
