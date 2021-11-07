@@ -1,18 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function fetch_meteorite_dataset() {
-  return axios
-    .get("https://data.nasa.gov/resource/gh4g-9sfh.json", {
-      timeout: 15000, // 15000ms request timeout
-    })
-    .then((res) => res.data);
-}
-
 export const columnNameMappings = {
   name: "Name",
   id: "Id",
@@ -31,46 +19,14 @@ export const fetchMeteorites = createAsyncThunk(
   // eslint-disable-next-line no-unused-vars
   async (obj = {}, { getState, rejectWithValue }) => {
     const filterKeywords = getState().dataBank.filter.toLowerCase();
+
     try {
-      const apiResponse = await fetch_meteorite_dataset();
-      await wait(100); // delay 100ms
+      const uri = `http://localhost:3001/api/meteorite-landings${
+        filterKeywords !== "" ? `/${filterKeywords}` : ""
+      }`;
 
-      // Fill in missing fields
-      const fillNAResponse = apiResponse.map((e) => {
-        for (const columnName of Object.keys(columnNameMappings)) {
-          if (typeof e[columnName] === "undefined" || e[columnName] === "") {
-            e[columnName] = `N/A`;
-          }
-        }
-        return e;
-      });
-
-      // If there are filterKeywords, filter fillNAResponse to include only
-      // meteorites with names containing filterKeywords
-      const filteredResponse =
-        filterKeywords === ""
-          ? fillNAResponse
-          : fillNAResponse.filter((meteorite) => {
-              return String(meteorite["name"])
-                .toLowerCase()
-                .includes(filterKeywords);
-            });
-      // Sort filteredResponse by "name" alphabetically in ascending order
-      const sortedByAlphabet = Array.from(filteredResponse).sort((a, b) => {
-        return a["name"].localeCompare(b["name"], "en", {
-          sensitivity: "base",
-        });
-      });
-      // Truncate 'Year' field
-      const yearTruncated = sortedByAlphabet.map((el) => {
-        return {
-          ...el,
-          year:
-            typeof el.year !== "undefined" ? el.year.split("-")[0] : el.year,
-        };
-      });
-
-      return yearTruncated;
+      const res = await axios.get(uri).then((res) => res.data);
+      return res;
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
