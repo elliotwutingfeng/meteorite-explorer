@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/meteorite-landings/(.*)",
+      "destination": "/api/meteorite-landings"
+    }
+  ]
+}
