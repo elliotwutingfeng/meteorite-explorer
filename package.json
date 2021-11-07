@@ -7,6 +7,6 @@
   "scripts": {
     "start": "cd server && yarn start",
     "start:frontend-dev": "cd client && react-scripts start",
-    "build": "cd client && react-scripts build"
+    "build": "cd client && rm -rf build/ && react-scripts build"
   }
 }
