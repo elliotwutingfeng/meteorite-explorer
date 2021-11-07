@@ -1,5 +1,7 @@
 # Meteorite Explorer
 
+![Screenshot](public/screenshot.png)
+
 ## Overview
 
 This single-page application was created as a pre-requisite solo-project for the Voyage 36 of the Chingu remote learning Programme. It pulls data from [NASA's Meteorite Landing dataset](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh)
