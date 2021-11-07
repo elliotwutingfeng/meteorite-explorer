@@ -73,7 +73,7 @@ const meteoriteExtraReducers = {
   [fetchMeteorites.rejected]: (state, action) => {
     state.page = 0;
     const statusCode = action.payload.status;
-    state.meteorites.status = statusCode;
+    state.meteorites.status = statusCode === 408 ? "timed out" : "failed";
   },
 };
 

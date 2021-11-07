@@ -15,6 +15,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { columnNameMappings, setPage } from "../dataBankSlice";
 
+const Scramble = ({ text }) => (
+  <TextScramble
+    play={true}
+    speed={1}
+    scramble={8}
+    step={1}
+    stepInterval={1}
+    seed={3}
+    seedInterval={10}
+    text={text}
+  />
+);
+
 const columns = Object.keys(columnNameMappings).map((e) => {
   return {
     field: e,
@@ -25,33 +38,13 @@ const columns = Object.keys(columnNameMappings).map((e) => {
     minWidth: 150,
 
     renderHeader: (params) => {
-      return (
-        <TextScramble
-          play={true}
-          speed={1}
-          scramble={8}
-          step={1}
-          stepInterval={1}
-          seed={3}
-          seedInterval={10}
-          text={params.colDef.headerName}
-        />
-      );
+      return <Scramble text={params.colDef.headerName} />;
     },
 
     renderCell: (cellValues) => {
       return (
         <Typography variant="body1">
-          <TextScramble
-            play={true}
-            speed={1}
-            scramble={8}
-            step={1}
-            stepInterval={1}
-            seed={3}
-            seedInterval={10}
-            text={cellValues.value}
-          />
+          <Scramble text={cellValues.value} />
         </Typography>
       );
     },
@@ -79,53 +72,12 @@ function BasicPagination({ pageSize, numEntries }) {
   );
 }
 
-const GridNoRowsOverlay = React.forwardRef(function GridNoRowsOverlay(
-  props,
-  ref
-) {
-  const theme = useTheme();
-  const meteorites = useSelector((state) => state.dataBank.meteorites.data);
-  return (
-    <GridOverlay ref={ref} {...props}>
-      {meteorites.length === 0 && (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <CancelIcon
-              fontSize="large"
-              sx={{ color: theme.palette.primary.main }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography variant="body1" color={theme.palette.primary.main}>
-              No matches found
-            </Typography>
-          </div>
-        </div>
-      )}
-    </GridOverlay>
-  );
-});
-
-const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
-  props,
-  ref
-) {
+const DataGridOverlay = React.forwardRef(function DataGridOverlay(props, ref) {
   const theme = useTheme();
   const loadingStatus = useSelector(
     (state) => state.dataBank.meteorites.status
   );
+
   return (
     <GridOverlay ref={ref} {...props} sx={{ zIndex: 1 }}>
       {loadingStatus === "pending" ? (
@@ -134,32 +86,6 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
           size="large"
           speed={0.5}
         />
-      ) : loadingStatus === 408 ? (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <HourglassBottom
-              fontSize="large"
-              sx={{ color: theme.palette.primary.main }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography variant="body1" color={theme.palette.primary.main}>
-              No Data: Request timed out
-            </Typography>
-          </div>
-        </div>
       ) : (
         <div>
           <div
@@ -169,10 +95,22 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
               justifyContent: "center",
             }}
           >
-            <ErrorIcon
-              fontSize="large"
-              sx={{ color: theme.palette.primary.main }}
-            />
+            {props.norows === "true" ? (
+              <CancelIcon
+                fontSize="large"
+                sx={{ color: theme.palette.primary.main }}
+              />
+            ) : loadingStatus === "timed out" ? (
+              <HourglassBottom
+                fontSize="large"
+                sx={{ color: theme.palette.primary.main }}
+              />
+            ) : (
+              <ErrorIcon
+                fontSize="large"
+                sx={{ color: theme.palette.primary.main }}
+              />
+            )}
           </div>
           <div
             style={{
@@ -182,7 +120,11 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
             }}
           >
             <Typography variant="body1" color={theme.palette.primary.main}>
-              No Data: Server Unreachable
+              {props.norows === "true"
+                ? `No Matches Found`
+                : loadingStatus === "timed out"
+                ? `No Data: Request timed out`
+                : `No Data: Server Unreachable`}
             </Typography>
           </div>
         </div>
@@ -362,8 +304,8 @@ export default function ResultsPanel() {
         Footer: () => (
           <BasicPagination pageSize={pageSize} numEntries={meteorites.length} />
         ),
-        NoRowsOverlay: () => <GridNoRowsOverlay />,
-        LoadingOverlay: () => <GridLoadingOverlay />,
+        NoRowsOverlay: () => <DataGridOverlay norows={"true"} />,
+        LoadingOverlay: () => <DataGridOverlay norows={"false"} />,
       }}
     />
   );
