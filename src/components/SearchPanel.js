@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   appendSearchHistory,
-  fetchMeteorites,
+  searchMeteorites,
   setFilter,
 } from "../dataBankSlice";
 
@@ -29,7 +29,7 @@ export default function SearchPanel() {
         disableClearable
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            dispatch(fetchMeteorites());
+            dispatch(searchMeteorites());
             dispatch(appendSearchHistory(filter));
             event.target.blur();
           }
@@ -47,7 +47,7 @@ export default function SearchPanel() {
                   : newValue.label
               )
             );
-            dispatch(fetchMeteorites());
+            dispatch(searchMeteorites());
             dispatch(appendSearchHistory(filter));
             event.target.blur();
           }
@@ -76,7 +76,7 @@ export default function SearchPanel() {
       <Button
         variant="contained"
         onClick={() => {
-          dispatch(fetchMeteorites());
+          dispatch(searchMeteorites());
           dispatch(appendSearchHistory(filter));
         }}
         color="primary"

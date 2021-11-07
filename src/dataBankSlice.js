@@ -18,7 +18,7 @@ const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
 async function fetch_meteorite_dataset() {
   return axios
     .get(endpointURI, {
-      timeout: 8000, // 8000ms request timeout
+      timeout: 15000, // 15000ms request timeout
     })
     .then((res) => res.data);
 }
@@ -49,7 +49,9 @@ function filterByKeywords(filterKeywords, data) {
   return filterKeywords === ""
     ? data
     : data.filter((meteorite) => {
-        return String(meteorite["name"]).toLowerCase().includes(filterKeywords);
+        return String(meteorite["name"])
+          .toLowerCase()
+          .includes(filterKeywords.toLowerCase());
       });
 }
 
@@ -70,16 +72,10 @@ function truncateYears(data) {
   });
 }
 
-async function clean_meteorite_dataset(filterKeywords) {
+async function clean_meteorite_dataset() {
   const apiResponse = await fetch_meteorite_dataset();
   // Fill in missing fields
-  const fillNAResponse = fillMissingFields(apiResponse);
-  // If there are filterKeywords, filter fillNAResponse to include only
-  // meteorites with names containing filterKeywords
-  const filteredResponse =
-    filterKeywords !== undefined
-      ? filterByKeywords(filterKeywords, fillNAResponse)
-      : fillNAResponse;
+  const filteredResponse = fillMissingFields(apiResponse);
   // Sort by "name" alphabetically in ascending order
   const sortedByAlphabet = sortByAlphabet(filteredResponse);
   // Truncate 'Year' field
@@ -92,9 +88,8 @@ export const fetchMeteorites = createAsyncThunk(
   "dataBank/fetchMeteorites",
   // eslint-disable-next-line no-unused-vars
   async (obj = {}, { getState, rejectWithValue }) => {
-    const filterKeywords = getState().dataBank.filter.toLowerCase();
     try {
-      return await clean_meteorite_dataset(filterKeywords);
+      return await clean_meteorite_dataset();
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
@@ -102,6 +97,13 @@ export const fetchMeteorites = createAsyncThunk(
 );
 
 const searchReducers = {
+  searchMeteorites(state) {
+    state.page = 0;
+    state.filtered_meteorites.data = filterByKeywords(
+      state.filter,
+      state.meteorites.data
+    );
+  },
   setFilter(state, action) {
     state.filter = action.payload;
   },
@@ -137,6 +139,7 @@ const meteoriteExtraReducers = {
   },
   [fetchMeteorites.fulfilled]: (state, action) => {
     state.meteorites.data = action.payload;
+    state.filtered_meteorites.data = action.payload;
     state.page = 0;
     state.meteorites.status = "up_to_date";
   },
@@ -155,6 +158,7 @@ export const dataBankSlice = createSlice({
     page: 0,
     filter: "",
     meteorites: { data: [], status: "pending" },
+    filtered_meteorites: { data: [] },
     searchHistory: [],
   },
   reducers: {
@@ -166,6 +170,6 @@ export const dataBankSlice = createSlice({
   },
 });
 
-export const { setFilter, setPage, appendSearchHistory } =
+export const { setFilter, setPage, appendSearchHistory, searchMeteorites } =
   dataBankSlice.actions;
 export default dataBankSlice.reducer;

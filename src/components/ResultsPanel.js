@@ -134,7 +134,9 @@ const DataGridOverlay = React.forwardRef(function DataGridOverlay(props, ref) {
 });
 
 export default function ResultsPanel() {
-  const meteorites = useSelector((state) => state.dataBank.meteorites.data);
+  const meteorites = useSelector(
+    (state) => state.dataBank.filtered_meteorites.data
+  );
   const loadingStatus = useSelector(
     (state) => state.dataBank.meteorites.status
   );
