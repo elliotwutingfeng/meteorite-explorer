@@ -1,18 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function get_predictions() {
-  return axios
-    .get("https://data.nasa.gov/resource/gh4g-9sfh.json", {
-      timeout: 15000, // 15000ms request timeout
-    })
-    .then((res) => res.data);
-}
-
 export const columnNameMappings = {
   name: "Name",
   id: "Id",
@@ -25,6 +13,80 @@ export const columnNameMappings = {
   reclong: "Longitude",
 };
 
+const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
+
+async function fetch_meteorite_dataset() {
+  return axios
+    .get(endpointURI, {
+      timeout: 8000, // 8000ms request timeout
+    })
+    .then((res) => res.data);
+}
+
+function fillMissingFields(data) {
+  const columnNameMappings = {
+    name: "Name",
+    id: "Id",
+    nametype: "Name Type",
+    recclass: "Rec Class",
+    mass: "Mass (g)",
+    fall: "Fall",
+    year: "Year",
+    reclat: "Latitude",
+    reclong: "Longitude",
+  };
+  return data.map((e) => {
+    for (const columnName of Object.keys(columnNameMappings)) {
+      if (typeof e[columnName] === "undefined" || e[columnName] === "") {
+        e[columnName] = `N/A`;
+      }
+    }
+    return e;
+  });
+}
+
+function filterByKeywords(filterKeywords, data) {
+  return filterKeywords === ""
+    ? data
+    : data.filter((meteorite) => {
+        return String(meteorite["name"]).toLowerCase().includes(filterKeywords);
+      });
+}
+
+function sortByAlphabet(data) {
+  return Array.from(data).sort((a, b) => {
+    return a["name"].localeCompare(b["name"], "en", {
+      sensitivity: "base",
+    });
+  });
+}
+
+function truncateYears(data) {
+  return data.map((el) => {
+    return {
+      ...el,
+      year: typeof el.year !== "undefined" ? el.year.split("-")[0] : el.year,
+    };
+  });
+}
+
+async function clean_meteorite_dataset(filterKeywords) {
+  const apiResponse = await fetch_meteorite_dataset();
+  // Fill in missing fields
+  const fillNAResponse = fillMissingFields(apiResponse);
+  // If there are filterKeywords, filter fillNAResponse to include only
+  // meteorites with names containing filterKeywords
+  const filteredResponse =
+    filterKeywords !== undefined
+      ? filterByKeywords(filterKeywords, fillNAResponse)
+      : fillNAResponse;
+  // Sort by "name" alphabetically in ascending order
+  const sortedByAlphabet = sortByAlphabet(filteredResponse);
+  // Truncate 'Year' field
+  const yearTruncated = truncateYears(sortedByAlphabet);
+  return yearTruncated;
+}
+
 // Data retrieval method
 export const fetchMeteorites = createAsyncThunk(
   "dataBank/fetchMeteorites",
@@ -32,45 +94,7 @@ export const fetchMeteorites = createAsyncThunk(
   async (obj = {}, { getState, rejectWithValue }) => {
     const filterKeywords = getState().dataBank.filter.toLowerCase();
     try {
-      const apiResponse = await get_predictions();
-      await wait(100); // delay 100ms
-
-      // Fill in missing fields
-      const fillNAResponse = apiResponse.map((e) => {
-        for (const columnName of Object.keys(columnNameMappings)) {
-          if (typeof e[columnName] === "undefined" || e[columnName] === "") {
-            e[columnName] = `N/A`;
-          }
-        }
-        return e;
-      });
-
-      // If there are filterKeywords, filter fillNAResponse to include only
-      // meteorites with names containing filterKeywords
-      const filteredResponse =
-        filterKeywords === ""
-          ? fillNAResponse
-          : fillNAResponse.filter((meteorite) => {
-              return String(meteorite["name"])
-                .toLowerCase()
-                .includes(filterKeywords);
-            });
-      // Sort filteredResponse by "name" alphabetically in ascending order
-      const sortedByAlphabet = Array.from(filteredResponse).sort((a, b) => {
-        return a["name"].localeCompare(b["name"], "en", {
-          sensitivity: "base",
-        });
-      });
-      // Truncate 'Year' field
-      const yearTruncated = sortedByAlphabet.map((el) => {
-        return {
-          ...el,
-          year:
-            typeof el.year !== "undefined" ? el.year.split("-")[0] : el.year,
-        };
-      });
-
-      return yearTruncated;
+      return await clean_meteorite_dataset(filterKeywords);
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
@@ -118,7 +142,8 @@ const meteoriteExtraReducers = {
   },
   [fetchMeteorites.rejected]: (state, action) => {
     state.page = 0;
-    state.meteorites.status = action.payload?.message?.includes("timeout of")
+    const message = action.payload.message;
+    state.meteorites.status = message.includes("timeout")
       ? "timed out"
       : "failed";
   },
