@@ -2,10 +2,12 @@
 
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(cors());
 
 async function fetch_meteorite_dataset() {
   const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
