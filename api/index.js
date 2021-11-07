@@ -97,7 +97,7 @@ function handleError(error, response) {
 
 app.get(`${baseURI}`, async (request, response) => {
   try {
-    response.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    response.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     return response.json(await clean_meteorite_dataset());
   } catch (error) {
     return handleError(error, response);
@@ -107,7 +107,7 @@ app.get(`${baseURI}`, async (request, response) => {
 app.get(`${baseURI}/:filterKeywords`, async (request, response) => {
   const filterKeywords = request.params.filterKeywords.toLowerCase();
   try {
-    response.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    response.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     return response.json(await clean_meteorite_dataset(filterKeywords));
   } catch (error) {
     return handleError(error, response);
@@ -118,4 +118,4 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-module.exports = app
+module.exports = app;
