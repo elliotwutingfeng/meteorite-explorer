@@ -24,9 +24,7 @@ export const fetchMeteorites = createAsyncThunk(
       const uri = `http://localhost:3001/api/meteorite-landings${
         filterKeywords !== "" ? `/${filterKeywords}` : ""
       }`;
-
-      const res = await axios.get(uri).then((res) => res.data);
-      return res;
+      return await axios.get(uri).then((res) => res.data);
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
@@ -74,9 +72,8 @@ const meteoriteExtraReducers = {
   },
   [fetchMeteorites.rejected]: (state, action) => {
     state.page = 0;
-    state.meteorites.status = action.payload?.message?.includes("timeout of")
-      ? "timed out"
-      : "failed";
+    const statusCode = action.payload.status;
+    state.meteorites.status = statusCode;
   },
 };
 

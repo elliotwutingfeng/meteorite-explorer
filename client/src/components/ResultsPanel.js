@@ -134,7 +134,7 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
           size="large"
           speed={0.5}
         />
-      ) : loadingStatus === "timed out" ? (
+      ) : loadingStatus === 408 ? (
         <div>
           <div
             style={{
@@ -182,7 +182,7 @@ const GridLoadingOverlay = React.forwardRef(function GridLoadingOverlay(
             }}
           >
             <Typography variant="body1" color={theme.palette.primary.main}>
-              No Data: Server unreachable
+              No Data: Server Unreachable
             </Typography>
           </div>
         </div>
