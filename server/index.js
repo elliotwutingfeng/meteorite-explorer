@@ -1,5 +1,4 @@
 // server/index.js
-
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -8,9 +7,13 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(cors());
+app.use(express.static("../client/build"));
+app.use(express.json());
+
+const baseURI = "/api/meteorite-landings";
+const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
 
 async function fetch_meteorite_dataset() {
-  const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
   return axios
     .get(endpointURI, {
       timeout: 15000, // 15000ms request timeout
@@ -92,7 +95,7 @@ function handleError(error, response) {
     : response.status(404).end();
 }
 
-app.get("/api/meteorite-landings", async (request, response) => {
+app.get(`${baseURI}`, async (request, response) => {
   try {
     return response.json(await clean_meteorite_dataset());
   } catch (error) {
@@ -100,17 +103,14 @@ app.get("/api/meteorite-landings", async (request, response) => {
   }
 });
 
-app.get(
-  "/api/meteorite-landings/:filterKeywords",
-  async (request, response) => {
-    const filterKeywords = request.params.filterKeywords.toLowerCase();
-    try {
-      return response.json(await clean_meteorite_dataset(filterKeywords));
-    } catch (error) {
-      return handleError(error, response);
-    }
+app.get(`${baseURI}/:filterKeywords`, async (request, response) => {
+  const filterKeywords = request.params.filterKeywords.toLowerCase();
+  try {
+    return response.json(await clean_meteorite_dataset(filterKeywords));
+  } catch (error) {
+    return handleError(error, response);
   }
-);
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
