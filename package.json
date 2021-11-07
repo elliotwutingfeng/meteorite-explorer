@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "cd server && yarn start",
+    "start:frontend-dev": "cd client && react-scripts start",
+    "build": "cd client && react-scripts build"
+  }
+}
