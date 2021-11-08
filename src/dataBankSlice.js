@@ -24,17 +24,6 @@ async function fetch_meteorite_dataset() {
 }
 
 function fillMissingFields(data) {
-  const columnNameMappings = {
-    name: "Name",
-    id: "Id",
-    nametype: "Name Type",
-    recclass: "Rec Class",
-    mass: "Mass (g)",
-    fall: "Fall",
-    year: "Year",
-    reclat: "Latitude",
-    reclong: "Longitude",
-  };
   return data.map((e) => {
     for (const columnName of Object.keys(columnNameMappings)) {
       if (typeof e[columnName] === "undefined" || e[columnName] === "") {
