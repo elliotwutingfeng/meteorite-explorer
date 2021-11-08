@@ -103,6 +103,7 @@ const searchReducers = {
       state.filter,
       state.meteorites.data
     );
+    state.previousSearchTerm = state.filter;
   },
   setFilter(state, action) {
     state.filter = action.payload;
@@ -160,6 +161,7 @@ export const dataBankSlice = createSlice({
     meteorites: { data: [], status: "pending" },
     filtered_meteorites: { data: [] },
     searchHistory: [],
+    previousSearchTerm: "",
   },
   reducers: {
     ...searchReducers,

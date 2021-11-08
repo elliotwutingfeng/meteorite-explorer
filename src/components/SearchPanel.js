@@ -17,6 +17,9 @@ export default function SearchPanel() {
 
   const searchHistory = useSelector((state) => state.dataBank.searchHistory);
   const filter = useSelector((state) => state.dataBank.filter);
+  const previousSearchTerm = useSelector(
+    (state) => state.dataBank.previousSearchTerm
+  );
   return (
     <Box
       sx={{
@@ -48,7 +51,11 @@ export default function SearchPanel() {
               )
             );
             dispatch(searchMeteorites());
-            dispatch(appendSearchHistory(filter));
+            dispatch(
+              appendSearchHistory(
+                typeof newValue === "object" ? newValue.label : newValue
+              )
+            );
             event.target.blur();
           }
         }}
@@ -64,7 +71,7 @@ export default function SearchPanel() {
         renderInput={(params) => (
           <TextField
             {...params}
-            inputProps={{ ...params.inputProps }}
+            inputProps={{ ...params.inputProps, value: filter }}
             label=""
             placeholder="Search by Name"
             aria-placeholder="Search by Name"
@@ -79,6 +86,7 @@ export default function SearchPanel() {
           dispatch(searchMeteorites());
           dispatch(appendSearchHistory(filter));
         }}
+        disabled={filter === previousSearchTerm}
         color="primary"
       >
         Search
