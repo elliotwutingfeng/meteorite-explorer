@@ -106,7 +106,10 @@ const searchReducers = {
     state.previousSearchTerm = state.filter;
   },
   setFilter(state, action) {
-    state.filter = action.payload;
+    // Replace whitespace-only input with ""
+    state.filter = !action.payload.replace(/\s/g, "").length
+      ? ""
+      : action.payload;
   },
   appendSearchHistory(state, action) {
     const searchTerm = action.payload;
