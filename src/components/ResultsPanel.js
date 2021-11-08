@@ -44,7 +44,7 @@ const columns = Object.keys(columnNameMappings).map((e) => {
     renderCell: (cellValues) => {
       return (
         <Typography variant="body1">
-          <Scramble text={cellValues.value} />
+          <Scramble text={cellValues.value} key={cellValues.id} />
         </Typography>
       );
     },
