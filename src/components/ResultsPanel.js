@@ -28,28 +28,33 @@ const Scramble = ({ text }) => (
   />
 );
 
-const columns = Object.keys(columnNameMappings).map((e) => {
-  return {
-    field: e,
-    headerName: columnNameMappings[e],
-    sortable: false,
-    editable: false,
-    flex: 1,
-    minWidth: 150,
+function columns(previousSearchTerm) {
+  return Object.keys(columnNameMappings).map((e) => {
+    return {
+      field: e,
+      headerName: columnNameMappings[e],
+      sortable: false,
+      editable: false,
+      flex: 1,
+      minWidth: 150,
 
-    renderHeader: (params) => {
-      return <Scramble text={params.colDef.headerName} />;
-    },
+      renderHeader: (params) => {
+        return <Scramble text={params.colDef.headerName} />;
+      },
 
-    renderCell: (cellValues) => {
-      return (
-        <Typography variant="body1">
-          <Scramble text={cellValues.value} key={cellValues.id} />
-        </Typography>
-      );
-    },
-  };
-});
+      renderCell: (cellValues) => {
+        return (
+          <Typography variant="body1">
+            <Scramble
+              text={cellValues.value}
+              key={previousSearchTerm + cellValues.id}
+            />
+          </Typography>
+        );
+      },
+    };
+  });
+}
 
 function BasicPagination({ pageSize, numEntries }) {
   const dispatch = useDispatch();
@@ -141,6 +146,9 @@ export default function ResultsPanel() {
     (state) => state.dataBank.meteorites.status
   );
   const page = useSelector((state) => state.dataBank.page);
+  const previousSearchTerm = useSelector(
+    (state) => state.dataBank.previousSearchTerm
+  );
 
   const pageSize = 10;
 
@@ -290,7 +298,7 @@ export default function ResultsPanel() {
       columnBuffer={pageSize} // DataGrid column virtualization; prevents disappearing column headers when resizing
       columnThreshold={pageSize} // DataGrid column virtualization; prevents disappearing column headers when resizing
       rows={meteorites}
-      columns={columns}
+      columns={columns(previousSearchTerm)}
       page={page}
       pageSize={pageSize}
       rowsPerPageOptions={[pageSize]}
