@@ -18,7 +18,7 @@ const endpointURI = "https://data.nasa.gov/resource/gh4g-9sfh.json";
 async function fetch_meteorite_dataset() {
   return axios
     .get(endpointURI, {
-      timeout: 15000, // 15000ms request timeout
+      timeout: 45000, // 45000ms request timeout
     })
     .then((res) => res.data);
 }
