@@ -9,6 +9,7 @@
     "@emotion/styled": "11.6.0",
     "@mui/icons-material": "5.2.5",
     "@mui/material": "5.2.5",
+    "@mui/system":"5.2.3",
     "@mui/styles": "5.2.3",
     "@mui/x-data-grid": "5.2.1",
     "@reduxjs/toolkit": "1.7.1",
