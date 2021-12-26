@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@a7sc11u/scramble": "0.0.6",
-    "@babel/runtime": "^7.16.5",
+    "@babel/runtime": "7.16.5",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
     "@mui/icons-material": "5.2.5",
@@ -57,7 +57,7 @@
     ]
   },
   "devDependencies": {
-    "babel-preset-react-app": "^10.0.1",
+    "babel-preset-react-app": "10.0.1",
     "eslint": "8.5.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.3.0",
