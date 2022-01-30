@@ -72,7 +72,7 @@ export default function SearchPanel() {
           <TextField
             {...params}
             inputProps={{ ...params.inputProps, value: filter }}
-            label=""
+            hiddenLabel
             placeholder="Search by Name"
             aria-placeholder="Search by Name"
             color="primary"
