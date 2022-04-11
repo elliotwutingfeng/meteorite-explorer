@@ -15,7 +15,7 @@
     "@mui/x-data-grid": "5.8.0",
     "@reduxjs/toolkit": "1.8.1",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "13.0.0",
+    "@testing-library/react": "13.0.1",
     "@testing-library/user-event": "14.1.0",
     "@types/yup": "0.29.13",
     "axios": "0.26.1",
