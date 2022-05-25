@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@a7sc11u/scramble": "0.0.6",
-    "@babel/runtime": "7.18.0",
+    "@babel/runtime": "7.18.2",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@mui/icons-material": "5.8.0",
