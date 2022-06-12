@@ -6,8 +6,8 @@
   "dependencies": {
     "@a7sc11u/scramble": "0.0.6",
     "@babel/runtime": "7.18.3",
-    "@emotion/react": "11.9.0",
-    "@emotion/styled": "11.8.1",
+    "@emotion/react": "11.9.3",
+    "@emotion/styled": "11.9.3",
     "@mui/icons-material": "5.8.3",
     "@mui/material": "5.8.3",
     "@mui/styles": "5.8.3",
