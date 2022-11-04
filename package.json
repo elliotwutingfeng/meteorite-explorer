@@ -25,7 +25,7 @@
     "react-loadingg": "1.7.2",
     "react-redux": "8.0.5",
     "react-scripts": "5.0.1",
-    "redux-thunk": "2.4.1",
+    "redux-thunk": "2.4.2",
     "web-vitals": "3.0.4",
     "yup": "0.32.11"
   },
