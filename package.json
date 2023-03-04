@@ -12,7 +12,7 @@
     "@mui/material": "5.11.11",
     "@mui/styles": "5.11.11",
     "@mui/system": "5.11.11",
-    "@mui/x-data-grid": "5.17.25",
+    "@mui/x-data-grid": "5.17.26",
     "@reduxjs/toolkit": "1.9.3",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
