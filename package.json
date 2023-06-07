@@ -6,7 +6,7 @@
   "dependencies": {
     "@a7sc11u/scramble": "0.0.6",
     "@babel/runtime": "7.22.3",
-    "@emotion/react": "11.11.0",
+    "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "5.13.4",
