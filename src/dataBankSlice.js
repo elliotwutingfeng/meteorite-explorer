@@ -82,7 +82,7 @@ export const fetchMeteorites = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.toJSON());
     }
-  }
+  },
 );
 
 const searchReducers = {
@@ -90,7 +90,7 @@ const searchReducers = {
     state.page = 0;
     state.filtered_meteorites.data = filterByKeywords(
       state.filter,
-      state.meteorites.data
+      state.meteorites.data,
     );
     state.previousSearchTerm = state.filter;
   },
@@ -109,7 +109,7 @@ const searchReducers = {
     if (state.searchHistory.some((e) => e.label === searchTerm)) {
       // Bubble existing searchTerm to the top
       state.searchHistory = [{ label: searchTerm }].concat(
-        state.searchHistory.filter((e) => e.label !== searchTerm)
+        state.searchHistory.filter((e) => e.label !== searchTerm),
       );
     } else {
       // Add searchTerm to searchHistory if it is not already in searchHistory.

@@ -80,7 +80,7 @@ function BasicPagination({ pageSize, numEntries }) {
 const DataGridOverlay = React.forwardRef(function DataGridOverlay(props, ref) {
   const theme = useTheme();
   const loadingStatus = useSelector(
-    (state) => state.dataBank.meteorites.status
+    (state) => state.dataBank.meteorites.status,
   );
 
   return (
@@ -140,14 +140,14 @@ const DataGridOverlay = React.forwardRef(function DataGridOverlay(props, ref) {
 
 export default function ResultsPanel() {
   const meteorites = useSelector(
-    (state) => state.dataBank.filtered_meteorites.data
+    (state) => state.dataBank.filtered_meteorites.data,
   );
   const loadingStatus = useSelector(
-    (state) => state.dataBank.meteorites.status
+    (state) => state.dataBank.meteorites.status,
   );
   const page = useSelector((state) => state.dataBank.page);
   const previousSearchTerm = useSelector(
-    (state) => state.dataBank.previousSearchTerm
+    (state) => state.dataBank.previousSearchTerm,
   );
 
   const pageSize = 10;
@@ -289,7 +289,7 @@ export default function ResultsPanel() {
         },
       },
     }),
-    { theme }
+    { theme },
   );
   const antDesignClasses = useStylesAntDesign();
   return (

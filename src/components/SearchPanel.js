@@ -18,7 +18,7 @@ export default function SearchPanel() {
   const searchHistory = useSelector((state) => state.dataBank.searchHistory);
   const filter = useSelector((state) => state.dataBank.filter);
   const previousSearchTerm = useSelector(
-    (state) => state.dataBank.previousSearchTerm
+    (state) => state.dataBank.previousSearchTerm,
   );
   return (
     <Box
@@ -47,14 +47,14 @@ export default function SearchPanel() {
               setFilter(
                 typeof newValue === "undefined" || newValue === null
                   ? ""
-                  : newValue.label
-              )
+                  : newValue.label,
+              ),
             );
             dispatch(searchMeteorites());
             dispatch(
               appendSearchHistory(
-                typeof newValue === "object" ? newValue.label : newValue
-              )
+                typeof newValue === "object" ? newValue.label : newValue,
+              ),
             );
             event.target.blur();
           }
@@ -64,8 +64,8 @@ export default function SearchPanel() {
             setFilter(
               typeof newInputValue === "undefined" || newInputValue === null
                 ? ""
-                : newInputValue
-            )
+                : newInputValue,
+            ),
           );
         }}
         renderInput={(params) => (
